@@ -49,13 +49,28 @@ Traditional Association Rule Mining (Market Basket Analysis) mines transactions 
    - PCA 2D projection scatter plot with cluster-based color encoding and customer-level hover tooltips.
    - Segment comparison table detailing customer count, percentage share, average spend, and dominant product affinities.
 
-4. **Association Rule Mining** (`/association-rules`)
+4. **New-User Product Recommendations** (`/recommendations`)
+   - Cold-start personalization engine for first-time shoppers without historical transaction data.
+   - Dynamic preference profiler: category selection, budget ceiling bounds, and target shopper personas.
+   - Multi-factor recommendation scoring:
+     $$\text{Score} = 100 \times [ (0.35 \times S_{\text{segment}}) + (0.25 \times L_{\text{norm\_rule}}) + (0.20 \times P_{\text{norm\_pop}}) + (0.15 \times M_{\text{pref}}) + (0.05 \times B_{\text{budget}}) ]$$
+   - FP-Growth cross-sell synergy expansion connecting antecedent preferences to high-lift consequents.
+   - Transparent human-readable explanations with explicit statistical metrics and factor contribution bars.
+   - Interactive 4-stage pipeline visualizer, segment affinity comparison chart, and CSV export.
+
+5. **Upgraded Ask Copilot (AI Intelligence)**
+   - Conversational assistant embedded across the entire application with stateful memory and context awareness.
+   - Direct natural-language product recommendations: extracts categories, budgets, and cluster references to generate structured recommendation cards in chat.
+   - Contextual follow-up support: handles "Why was this recommended?", "Show alternatives", "What if the budget is lower?", "Compare these recommendations", "Which segment is this based on?", and "Give me a marketing strategy".
+   - Honest, data-grounded responses that prevent statistical hallucination.
+
+6. **Association Rule Mining** (`/association-rules`)
    - Configurable algorithm selection: **FP-Growth** (Frequent Pattern Tree) vs **Apriori** (Candidate Generation).
    - Dynamic threshold controls: Minimum Support ($s$), Minimum Confidence ($c$), and Minimum Lift.
    - Comprehensive rule metrics: Support, Confidence, Lift, Leverage, and Conviction.
    - Filterable by cohort scope: Global catalog vs individual customer segments.
 
-5. **Cross-Cluster Association Discovery** (`/cross-cluster`)
+7. **Cross-Cluster Association Discovery** (`/cross-cluster`)
    - Differential rule analysis comparing lift and support across discovered segments.
    - Pattern classification:
      - **Universal**: Consistent, strong association across all customer groups.
@@ -64,24 +79,25 @@ Traditional Association Rule Mining (Market Basket Analysis) mines transactions 
      - **Emerging**: Growing affinity in early-adoption cohorts.
    - Full symmetric category co-occurrence matrix heatmap with metric toggles (Lift, Confidence, Support, Frequency).
 
-6. **Network Graph** (`/network`)
+8. **Network Graph** (`/network`)
    - Interactive topological category network.
    - Nodes represent product categories with radius proportional to catalog centrality.
    - Edges represent association strength with thickness and opacity scaled by lift.
    - Radial layout with interactive node isolation, edge hover inspection, and minimum lift filtering.
 
-7. **Business Insights & Merchandising** (`/insights`)
+9. **Business Insights & Merchandising** (`/insights`)
    - Prescriptive product bundling configurations with expected uplift.
    - Targeted checkout cross-selling recommendations tailored to specific segments.
    - Customer segment growth blueprints and retention strategies.
 
-8. **Reports & Exports** (`/reports`)
-   - Printable executive audit reports with print-optimized CSS layout.
-   - One-click CSV export of discovered association rules and transaction records.
+10. **Reports & Exports** (`/reports`)
+    - Printable executive audit reports with print-optimized CSS layout.
+    - One-click CSV export of discovered association rules and transaction records.
 
-9. **Settings & Configuration** (`/settings`)
-   - Hyperparameter management: $k$, $\varepsilon$, MinPts, Support, Confidence, Lift.
-   - Optional routing to external Python FastAPI microservice.
+11. **Settings & Configuration** (`/settings`)
+    - Hyperparameter management: $k$, $\varepsilon$, MinPts, Support, Confidence, Lift.
+    - Theme switching (Light / Dark mode) with local storage persistence.
+    - Optional routing to external Python FastAPI microservice.
    - Database connection status and schema reference.
 
 ---
@@ -141,6 +157,15 @@ Open [http://localhost:3000](http://localhost:3000) in your browser. The app sta
 npm run build
 npm run start
 ```
+
+### 4. Running Automated Tests
+```bash
+npm test
+```
+Executes the master verification suite covering:
+- Cold-start recommendation engine (14 test scenarios, 27 assertions).
+- Ask Copilot natural language processing, recommendation generation, and conversational follow-ups (6 test suites, 19 assertions).
+- Full pass rate (46/46 assertions passing).
 
 ---
 

@@ -82,6 +82,8 @@ export interface ClusteringModelResult {
   }>;
 }
 
+export type ClusteringResult = ClusteringModelResult;
+
 export interface FrequentItemset {
   items: string[];
   support: number;
@@ -143,6 +145,8 @@ export interface CategoryMatrixCell {
   confidence: number;
   lift: number;
 }
+
+export type CoOccurrenceCell = CategoryMatrixCell;
 
 export interface NetworkNode {
   id: string;

@@ -149,8 +149,8 @@ export default function DatasetManagementPage() {
       {/* Page Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-slate-900">Dataset Management & Ingestion</h1>
-          <p className="text-xs text-slate-500">
+          <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">Dataset Management & Ingestion</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Upload custom CSV files, switch between realistic industrial benchmark catalogs, inspect data integrity, and export clean transactions.
           </p>
         </div>
@@ -169,8 +169,8 @@ export default function DatasetManagementPage() {
 
       {/* Preset Catalogs Selector Cards */}
       <div className="space-y-2">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-          <Sparkles className="h-3.5 w-3.5 text-blue-600" />
+        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+          <Sparkles className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
           <span>Industry Benchmark Catalog Presets</span>
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -184,32 +184,34 @@ export default function DatasetManagementPage() {
                 onClick={() => loadPresetDataset(preset.id)}
                 className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                   isSelected
-                    ? "border-blue-500 bg-blue-50/70 shadow-2xs ring-1 ring-blue-500"
-                    : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-2xs"
+                    ? "border-blue-500 bg-blue-50/70 dark:bg-blue-950/60 shadow-2xs ring-1 ring-blue-500"
+                    : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-2xs"
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <div
                       className={`h-8 w-8 rounded-lg flex items-center justify-center ${
-                        isSelected ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-600"
+                        isSelected
+                          ? "bg-blue-600 text-white"
+                          : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
                       }`}
                     >
                       <Icon className="h-4 w-4" />
                     </div>
                     {isSelected && (
-                      <span className="text-[10px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/60 px-2 py-0.5 rounded-full">
                         Active
                       </span>
                     )}
                   </div>
-                  <h4 className="text-xs font-bold text-slate-900">{preset.name}</h4>
-                  <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">{preset.name}</h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
                     {preset.description}
                   </p>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400 font-mono">
+                <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500 font-mono">
                   <span>{preset.targetRows.toLocaleString()} tx</span>
                   <span>{preset.categories.length} categories</span>
                 </div>
@@ -222,15 +224,15 @@ export default function DatasetManagementPage() {
       {/* Upload Zone & Ingestion Diagnostics */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Upload Dropzone */}
-        <div className="lg:col-span-2 rounded-2xl border-2 border-dashed border-slate-300 bg-white p-6 text-center hover:border-blue-500 transition-colors flex flex-col items-center justify-center space-y-3">
-          <div className="h-12 w-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+        <div className="lg:col-span-2 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 text-center hover:border-blue-500 dark:hover:border-blue-400 transition-colors flex flex-col items-center justify-center space-y-3">
+          <div className="h-12 w-12 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
             <UploadCloud className="h-6 w-6" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
               Upload Custom Retail Transaction CSV
             </h3>
-            <p className="text-xs text-slate-500 max-w-sm mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mt-0.5">
               Supports standard formats with headers: transaction_id, customer_id, product_name, product_category, quantity, unit_price, date, age_group, region.
             </p>
           </div>
@@ -246,13 +248,13 @@ export default function DatasetManagementPage() {
           </label>
 
           {isUploading && (
-            <p className="text-xs text-blue-600 animate-pulse font-medium">
+            <p className="text-xs text-blue-600 dark:text-blue-400 animate-pulse font-medium">
               Parsing and preprocessing uploaded records...
             </p>
           )}
 
           {uploadError && (
-            <div className="flex items-center gap-1.5 text-xs text-rose-600 bg-rose-50 px-3 py-1 rounded-lg border border-rose-200">
+            <div className="flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-3 py-1 rounded-lg border border-rose-200 dark:border-rose-800">
               <AlertTriangle className="h-4 w-4" />
               <span>{uploadError}</span>
             </div>
@@ -260,30 +262,30 @@ export default function DatasetManagementPage() {
         </div>
 
         {/* Validation & Ingestion Quality Metrics */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-2xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <Database className="h-4 w-4 text-blue-600" />
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-2xs space-y-4">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <Database className="h-4 w-4 text-blue-600 dark:text-blue-400" />
             <span>Dataset Integrity Check</span>
           </h3>
 
           <div className="space-y-2 text-xs">
-            <div className="flex justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
-              <span className="text-slate-600">Active Dataset:</span>
-              <span className="font-semibold text-slate-900 truncate max-w-[140px]">
+            <div className="flex justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700">
+              <span className="text-slate-600 dark:text-slate-400">Active Dataset:</span>
+              <span className="font-semibold text-slate-900 dark:text-slate-100 truncate max-w-[140px]">
                 {datasetName}
               </span>
             </div>
 
-            <div className="flex justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
-              <span className="text-slate-600">Total Rows:</span>
-              <span className="font-mono font-semibold text-slate-900">
+            <div className="flex justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700">
+              <span className="text-slate-600 dark:text-slate-400">Total Rows:</span>
+              <span className="font-mono font-semibold text-slate-900 dark:text-slate-100">
                 {rawTransactions.length.toLocaleString()}
               </span>
             </div>
 
-            <div className="flex justify-between p-2 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-100">
+            <div className="flex justify-between p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800">
               <span className="flex items-center gap-1">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                 Valid Transactions:
               </span>
               <span className="font-mono font-bold">
@@ -291,23 +293,23 @@ export default function DatasetManagementPage() {
               </span>
             </div>
 
-            <div className="flex justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
-              <span className="text-slate-600">Unique Customers:</span>
-              <span className="font-mono font-semibold text-slate-900">
+            <div className="flex justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700">
+              <span className="text-slate-600 dark:text-slate-400">Unique Customers:</span>
+              <span className="font-mono font-semibold text-slate-900 dark:text-slate-100">
                 {result?.datasetMetadata.uniqueCustomers ?? 0}
               </span>
             </div>
 
-            <div className="flex justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
-              <span className="text-slate-600">Unique Categories:</span>
-              <span className="font-mono font-semibold text-slate-900">
+            <div className="flex justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700">
+              <span className="text-slate-600 dark:text-slate-400">Unique Categories:</span>
+              <span className="font-mono font-semibold text-slate-900 dark:text-slate-100">
                 {result?.datasetMetadata.uniqueCategories ?? 0}
               </span>
             </div>
 
-            <div className="flex justify-between p-2 rounded-lg bg-amber-50 text-amber-800 border border-amber-100">
+            <div className="flex justify-between p-2 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-100 dark:border-amber-800">
               <span className="flex items-center gap-1">
-                <AlertTriangle className="h-3.5 w-3.5 text-amber-600" />
+                <AlertTriangle className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
                 Missing Fields Handled:
               </span>
               <span className="font-mono font-semibold">
@@ -322,19 +324,19 @@ export default function DatasetManagementPage() {
       <DataProfiler transactions={rawTransactions} />
 
       {/* Dataset Preview Table */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-2xs">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-2xs">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-base font-bold text-slate-900">
+            <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
               Transaction Records Preview
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Search and verify raw input data before feeding into customer clustering and association mining.
             </p>
           </div>
         </div>
 
-        <DatasetTable data={rawTransactions} onDownloadCSV={handleDownload} />
+        <DatasetTable transactions={rawTransactions} onDownloadCSV={handleDownload} />
       </div>
     </div>
   );

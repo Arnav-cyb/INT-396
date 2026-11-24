@@ -17,9 +17,9 @@ export function ClusterComparisonTable({
   onSelectCluster,
 }: ClusterComparisonTableProps) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-2xs">
-      <table className="min-w-full divide-y divide-slate-200 text-left text-xs">
-        <thead className="bg-slate-50/90 font-semibold text-slate-500 uppercase tracking-wider text-[11px] font-mono">
+    <div className="overflow-x-auto rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs">
+      <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 text-left text-xs">
+        <thead className="bg-slate-50/90 dark:bg-slate-950/90 font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-[11px] font-mono">
           <tr>
             <th className="px-4 py-3">Cluster Archetype</th>
             <th className="px-3 py-3 text-right">Customer Count</th>
@@ -32,7 +32,7 @@ export function ClusterComparisonTable({
             <th className="px-3 py-3 text-center">Status</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
           {clusters.map((cluster) => {
             const isSelected = selectedClusterId === cluster.clusterId;
 
@@ -40,7 +40,9 @@ export function ClusterComparisonTable({
               <tr
                 key={cluster.clusterId}
                 className={`transition-colors cursor-pointer ${
-                  isSelected ? "bg-blue-50/60" : "hover:bg-slate-50/80"
+                  isSelected
+                    ? "bg-blue-50/60 dark:bg-blue-950/40"
+                    : "hover:bg-slate-50/80 dark:hover:bg-slate-800/50"
                 }`}
                 onClick={() => onSelectCluster(cluster.clusterId)}
               >
@@ -48,18 +50,18 @@ export function ClusterComparisonTable({
                 <td className="px-4 py-3.5">
                   <div className="flex items-center gap-2.5">
                     <span
-                      className="h-3 w-3 rounded-full shrink-0 ring-2 ring-white shadow-2xs"
+                      className="h-3 w-3 rounded-full shrink-0 ring-2 ring-white dark:ring-slate-900 shadow-2xs"
                       style={{ backgroundColor: cluster.color }}
                     />
                     <div>
-                      <div className="font-bold text-slate-900">{cluster.archetype}</div>
-                      <div className="text-[10px] text-slate-400 font-mono">Cluster #{cluster.clusterId + 1}</div>
+                      <div className="font-bold text-slate-900 dark:text-slate-100">{cluster.archetype}</div>
+                      <div className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">Cluster #{cluster.clusterId + 1}</div>
                     </div>
                   </div>
                 </td>
 
                 {/* Customer Count */}
-                <td className="px-3 py-3.5 text-right font-mono font-medium text-slate-700">
+                <td className="px-3 py-3.5 text-right font-mono font-medium text-slate-700 dark:text-slate-300">
                   <div className="inline-flex items-center gap-1">
                     <Users className="h-3.5 w-3.5 text-slate-400" />
                     <span>{cluster.customerCount.toLocaleString()}</span>
@@ -67,22 +69,22 @@ export function ClusterComparisonTable({
                 </td>
 
                 {/* Share */}
-                <td className="px-3 py-3.5 text-right font-mono font-bold text-slate-900">
+                <td className="px-3 py-3.5 text-right font-mono font-bold text-slate-900 dark:text-slate-100">
                   {cluster.percentage}%
                 </td>
 
                 {/* Total Spend */}
-                <td className="px-3 py-3.5 text-right font-mono font-bold text-slate-900">
+                <td className="px-3 py-3.5 text-right font-mono font-bold text-slate-900 dark:text-slate-100">
                   {formatCurrency(cluster.totalSpend)}
                 </td>
 
                 {/* Avg Spend */}
-                <td className="px-3 py-3.5 text-right font-mono text-blue-700 font-bold">
+                <td className="px-3 py-3.5 text-right font-mono text-blue-700 dark:text-blue-400 font-bold">
                   {formatCurrency(cluster.avgCustomerSpend)}
                 </td>
 
                 {/* Basket Size */}
-                <td className="px-3 py-3.5 text-right font-mono text-slate-600 font-semibold">
+                <td className="px-3 py-3.5 text-right font-mono text-slate-600 dark:text-slate-300 font-semibold">
                   {cluster.avgBasketSize.toFixed(1)} items
                 </td>
 
@@ -92,20 +94,20 @@ export function ClusterComparisonTable({
                     {cluster.topCategories.slice(0, 3).map((cat) => (
                       <span
                         key={cat.category}
-                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] bg-slate-100 text-slate-700 border border-slate-200/60 font-medium"
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700 font-medium"
                       >
                         <Tag className="h-2.5 w-2.5 text-slate-400" />
                         <span>{cat.category}</span>
-                        <span className="text-slate-400 font-mono">({cat.share}%)</span>
+                        <span className="text-slate-400 dark:text-slate-500 font-mono">({cat.share}%)</span>
                       </span>
                     ))}
                   </div>
                 </td>
 
                 {/* Demographics */}
-                <td className="px-3 py-3.5 text-slate-600">
-                  <div className="text-xs font-medium text-slate-800">{cluster.dominantAgeGroup}</div>
-                  <div className="text-[10px] text-slate-400">{cluster.dominantRegion}</div>
+                <td className="px-3 py-3.5 text-slate-600 dark:text-slate-400">
+                  <div className="text-xs font-medium text-slate-800 dark:text-slate-200">{cluster.dominantAgeGroup}</div>
+                  <div className="text-[10px] text-slate-400 dark:text-slate-500">{cluster.dominantRegion}</div>
                 </td>
 
                 {/* Action button */}
@@ -118,7 +120,7 @@ export function ClusterComparisonTable({
                     className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-colors ${
                       isSelected
                         ? "bg-blue-600 text-white shadow-2xs"
-                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700"
                     }`}
                   >
                     {isSelected ? "Filtered" : "Inspect"}

@@ -42,8 +42,11 @@ interface AppContextType {
   selectedClusterId: number | "all";
   selectedCategory: string | "all";
   selectedRuleForDrawer: AssociationRule | null;
+  theme: "light" | "dark";
   isCommandPaletteOpen: boolean;
   isCopilotOpen: boolean;
+  toggleTheme: () => void;
+  setTheme: (theme: "light" | "dark") => void;
   setIsCommandPaletteOpen: (open: boolean) => void;
   setIsCopilotOpen: (open: boolean) => void;
   setSelectedRuleForDrawer: (rule: AssociationRule | null) => void;
@@ -82,8 +85,39 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [selectedClusterId, setSelectedClusterId] = useState<number | "all">("all");
   const [selectedCategory, setSelectedCategory] = useState<string | "all">("all");
   const [selectedRuleForDrawer, setSelectedRuleForDrawer] = useState<AssociationRule | null>(null);
+  const [theme, setThemeState] = useState<"light" | "dark">("light");
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
   const [isCopilotOpen, setIsCopilotOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const initialTheme = saved === "dark" || (!saved && prefersDark) ? "dark" : "light";
+      setThemeState(initialTheme);
+      if (initialTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    } catch (e) {}
+  }, []);
+
+  const setTheme = (newTheme: "light" | "dark") => {
+    setThemeState(newTheme);
+    try {
+      if (newTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+      localStorage.setItem("theme", newTheme);
+    } catch (e) {}
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   const updateConfig = (newConfig: Partial<PipelineConfig>) => {
     setConfig((prev) => ({ ...prev, ...newConfig }));
@@ -186,6 +220,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         selectedClusterId,
         selectedCategory,
         selectedRuleForDrawer,
+        theme,
+        toggleTheme,
+        setTheme,
         isCommandPaletteOpen,
         isCopilotOpen,
         setIsCommandPaletteOpen,

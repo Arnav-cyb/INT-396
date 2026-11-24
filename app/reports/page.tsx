@@ -120,10 +120,10 @@ export default function ReportsPage() {
       {/* Title & Actions Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-slate-900">
+          <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">
             Executive Analytics Reports & Exports
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Generate printable PDF reports, export association rule models, and download clean datasets.
           </p>
         </div>
@@ -154,59 +154,59 @@ export default function ReportsPage() {
       {/* Printable Report Document Card */}
       <div
         ref={reportRef}
-        className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm space-y-6 print:border-none print:shadow-none print:p-0"
+        className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm space-y-6 print:border-none print:shadow-none print:p-0"
       >
         {/* Document Header */}
-        <div className="border-b border-slate-200 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="border-b border-slate-200 dark:border-slate-800 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">
+            <div className="flex items-center gap-2 text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1">
               <Sparkles className="h-4 w-4" />
               <span>Category Association Discovery Report</span>
             </div>
-            <h2 className="text-2xl font-extrabold text-slate-900">
+            <h2 className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">
               Retail Segment & Category Association Audit
             </h2>
-            <p className="text-xs text-slate-500 mt-1">
-              Dataset: <strong>{datasetName}</strong> • Generated on {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              Dataset: <strong className="text-slate-800 dark:text-slate-200">{datasetName}</strong> • Generated on {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
             </p>
           </div>
 
-          <div className="text-right text-xs text-slate-400 space-y-0.5">
+          <div className="text-right text-xs text-slate-400 dark:text-slate-500 space-y-0.5">
             <div>Engine: Dual Next.js / Python ML Architecture</div>
-            <div>Status: <span className="text-emerald-600 font-semibold">Validated & Audited</span></div>
+            <div>Status: <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Validated & Audited</span></div>
           </div>
         </div>
 
         {/* Executive Summary Metrics */}
         <div>
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
             1. Key Performance Indicators
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/60">
-              <div className="text-[11px] text-slate-500">Total Valid Line Items</div>
-              <div className="text-lg font-bold text-slate-900 mt-0.5">
+            <div className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60">
+              <div className="text-[11px] text-slate-500 dark:text-slate-400">Total Valid Line Items</div>
+              <div className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-0.5">
                 {meta.validRowCount.toLocaleString()}
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/60">
-              <div className="text-[11px] text-slate-500">Total Catalog Revenue</div>
-              <div className="text-lg font-bold text-blue-700 mt-0.5">
+            <div className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60">
+              <div className="text-[11px] text-slate-500 dark:text-slate-400">Total Catalog Revenue</div>
+              <div className="text-lg font-bold text-blue-700 dark:text-blue-400 mt-0.5">
                 {formatCurrency(meta.totalRevenue)}
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/60">
-              <div className="text-[11px] text-slate-500">Customer Segments</div>
-              <div className="text-lg font-bold text-purple-700 mt-0.5">
+            <div className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60">
+              <div className="text-[11px] text-slate-500 dark:text-slate-400">Customer Segments</div>
+              <div className="text-lg font-bold text-purple-700 dark:text-purple-400 mt-0.5">
                 {clusters.length} Segments
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/60">
-              <div className="text-[11px] text-slate-500">High-Lift Rules (&gt;1.5x)</div>
-              <div className="text-lg font-bold text-emerald-700 mt-0.5">
+            <div className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60">
+              <div className="text-[11px] text-slate-500 dark:text-slate-400">High-Lift Rules (&gt;1.5x)</div>
+              <div className="text-lg font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">
                 {rules.filter((r) => r.lift >= 1.5).length} Rules
               </div>
             </div>
@@ -215,12 +215,12 @@ export default function ReportsPage() {
 
         {/* 2. Discovered Customer Segments Summary */}
         <div>
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
             2. Customer Segment Breakdown
           </h3>
-          <div className="overflow-x-auto rounded-xl border border-slate-200">
-            <table className="min-w-full divide-y divide-slate-200 text-xs text-left">
-              <thead className="bg-slate-50 font-semibold text-slate-700">
+          <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+            <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 text-xs text-left">
+              <thead className="bg-slate-50 dark:bg-slate-950 font-semibold text-slate-700 dark:text-slate-300">
                 <tr>
                   <th className="px-3 py-2.5">Segment Archetype</th>
                   <th className="px-3 py-2.5 text-right">Customer Count</th>
@@ -230,15 +230,15 @@ export default function ReportsPage() {
                   <th className="px-3 py-2.5">Demographics</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
                 {clusters.map((c) => (
                   <tr key={c.clusterId}>
-                    <td className="px-3 py-2.5 font-bold text-slate-900">{c.archetype}</td>
-                    <td className="px-3 py-2.5 text-right font-mono">{c.customerCount}</td>
-                    <td className="px-3 py-2.5 text-right font-mono font-semibold">{c.percentage}%</td>
-                    <td className="px-3 py-2.5 text-right font-mono text-blue-700 font-bold">{formatCurrency(c.avgCustomerSpend)}</td>
-                    <td className="px-3 py-2.5">{c.topCategories[0]?.category} ({c.topCategories[0]?.share}%)</td>
-                    <td className="px-3 py-2.5 text-slate-500">{c.dominantAgeGroup} • {c.dominantRegion}</td>
+                    <td className="px-3 py-2.5 font-bold text-slate-900 dark:text-slate-100">{c.archetype}</td>
+                    <td className="px-3 py-2.5 text-right font-mono text-slate-700 dark:text-slate-300">{c.customerCount}</td>
+                    <td className="px-3 py-2.5 text-right font-mono font-semibold text-slate-800 dark:text-slate-200">{c.percentage}%</td>
+                    <td className="px-3 py-2.5 text-right font-mono text-blue-700 dark:text-blue-400 font-bold">{formatCurrency(c.avgCustomerSpend)}</td>
+                    <td className="px-3 py-2.5 text-slate-700 dark:text-slate-300">{c.topCategories[0]?.category} ({c.topCategories[0]?.share}%)</td>
+                    <td className="px-3 py-2.5 text-slate-500 dark:text-slate-400">{c.dominantAgeGroup} • {c.dominantRegion}</td>
                   </tr>
                 ))}
               </tbody>
@@ -248,12 +248,12 @@ export default function ReportsPage() {
 
         {/* 3. Top Cross-Cluster Association Rules */}
         <div>
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
             3. Key Merchandising Associations & Prescriptions
           </h3>
-          <div className="overflow-x-auto rounded-xl border border-slate-200">
-            <table className="min-w-full divide-y divide-slate-200 text-xs text-left">
-              <thead className="bg-slate-50 font-semibold text-slate-700">
+          <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+            <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 text-xs text-left">
+              <thead className="bg-slate-50 dark:bg-slate-950 font-semibold text-slate-700 dark:text-slate-300">
                 <tr>
                   <th className="px-3 py-2.5">Rule (Antecedent ➔ Consequent)</th>
                   <th className="px-3 py-2.5">Classification</th>
@@ -262,22 +262,22 @@ export default function ReportsPage() {
                   <th className="px-3 py-2.5">Prescribed Business Strategy</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
                 {comparisons.slice(0, 8).map((comp) => (
                   <tr key={comp.ruleKey}>
-                    <td className="px-3 py-2.5 font-medium text-slate-900">
+                    <td className="px-3 py-2.5 font-medium text-slate-900 dark:text-slate-100">
                       {comp.antecedent.join(" & ")} ➔ {comp.consequent.join(" & ")}
                     </td>
-                    <td className="px-3 py-2.5 capitalize text-slate-600 font-semibold">
+                    <td className="px-3 py-2.5 capitalize text-slate-600 dark:text-slate-400 font-semibold">
                       {comp.type.replace("_", " ")}
                     </td>
-                    <td className="px-3 py-2.5 text-right font-mono font-bold text-blue-700">
+                    <td className="px-3 py-2.5 text-right font-mono font-bold text-blue-700 dark:text-blue-400">
                       {comp.maxLift.toFixed(2)}x
                     </td>
-                    <td className="px-3 py-2.5 text-right font-mono text-slate-700">
+                    <td className="px-3 py-2.5 text-right font-mono text-slate-700 dark:text-slate-300">
                       {((comp.clusterStats[comp.dominantClusterId]?.confidence || 0.3) * 100).toFixed(1)}%
                     </td>
-                    <td className="px-3 py-2.5 text-slate-600 text-[11px] max-w-xs">
+                    <td className="px-3 py-2.5 text-slate-600 dark:text-slate-300 text-[11px] max-w-xs">
                       {comp.actionRecommendation}
                     </td>
                   </tr>
@@ -288,7 +288,7 @@ export default function ReportsPage() {
         </div>
 
         {/* Footer Audit Signoff */}
-        <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-400 gap-2">
+        <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-400 dark:text-slate-500 gap-2">
           <span>Clustering Silhouette: {result.clustering.silhouetteScore.toFixed(3)} | DB Index: {result.clustering.daviesBouldinIndex.toFixed(3)}</span>
           <span>Antigravity Enterprise Analytics Pipeline • End of Report</span>
         </div>

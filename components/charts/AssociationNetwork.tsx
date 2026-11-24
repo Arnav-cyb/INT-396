@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { AssociationRule } from "@/lib/types";
 import { useAppStore } from "@/lib/store";
-import { Search, Zap, Filter, Sparkles, Layers, Sliders } from "lucide-react";
+import { Search, Sliders, Maximize2, RotateCcw } from "lucide-react";
 
 interface AssociationNetworkProps {
   categories: string[];
@@ -17,8 +17,8 @@ interface Node {
   x: number;
   y: number;
   radius: number;
-  color: string;
   connections: number;
+  color: string;
 }
 
 interface Edge {
@@ -31,73 +31,72 @@ interface Edge {
 }
 
 const CATEGORY_COLORS = [
-  "#2563eb", // blue-600
-  "#7c3aed", // violet-600
-  "#059669", // emerald-600
-  "#d97706", // amber-600
-  "#db2777", // pink-600
-  "#0891b2", // cyan-600
-  "#4f46e5", // indigo-600
-  "#14b8a6", // teal-600
-  "#ea580c", // orange-600
-  "#65a30d", // lime-600
+  "#3b82f6", // Blue
+  "#8b5cf6", // Purple
+  "#10b981", // Emerald
+  "#f59e0b", // Amber
+  "#ef4444", // Rose
+  "#06b6d4", // Cyan
+  "#ec4899", // Pink
+  "#6366f1", // Indigo
 ];
 
 export function AssociationNetwork({
   categories,
   rules,
-  selectedClusterName = "All Clusters",
+  selectedClusterName = "All Segments",
 }: AssociationNetworkProps) {
   const { setSelectedRuleForDrawer } = useAppStore();
   const [minLift, setMinLift] = useState<number>(1.2);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [hoveredEdge, setHoveredEdge] = useState<Edge | null>(null);
-  const [categorySearch, setCategorySearch] = useState<string>("");
+  const [categorySearch, setCategorySearch] = useState("");
 
-  const width = 720;
-  const height = 500;
+  const width = 640;
+  const height = 480;
   const centerX = width / 2;
   const centerY = height / 2;
-  const layoutRadius = 195;
+  const layoutRadius = Math.min(centerX, centerY) - 75;
 
-  // Process Edges from rules
-  const edges: Edge[] = useMemo(() => {
+  // Compute connections per category and construct directed edges
+  const { edges, nodeConnections } = useMemo(() => {
     const edgeList: Edge[] = [];
-    const seen = new Set<string>();
+    const connMap = new Map<string, number>();
 
-    for (const rule of rules) {
-      if (rule.lift >= minLift && rule.antecedent.length === 1 && rule.consequent.length === 1) {
-        const src = rule.antecedent[0];
-        const tgt = rule.consequent[0];
-        const key = `${src}==>${tgt}`;
+    rules.forEach((r) => {
+      if (r.lift >= minLift) {
+        r.antecedent.forEach((ant) => {
+          r.consequent.forEach((cons) => {
+            edgeList.push({
+              source: ant,
+              target: cons,
+              lift: r.lift,
+              confidence: r.confidence,
+              support: r.support,
+              ruleObj: r,
+            });
 
-        if (!seen.has(key)) {
-          seen.add(key);
-          edgeList.push({
-            source: src,
-            target: tgt,
-            lift: rule.lift,
-            confidence: rule.confidence,
-            support: rule.support,
-            ruleObj: rule,
+            connMap.set(ant, (connMap.get(ant) || 0) + 1);
+            connMap.set(cons, (connMap.get(cons) || 0) + 1);
           });
-        }
+        });
       }
-    }
-    return edgeList;
+    });
+
+    return { edges: edgeList, nodeConnections: connMap };
   }, [rules, minLift]);
 
-  // Build Nodes arranged radially with adaptive spacing
+  // Circular layout of nodes
   const nodes: Node[] = useMemo(() => {
     const total = categories.length || 1;
+    const step = (2 * Math.PI) / total;
+
     return categories.map((cat, idx) => {
-      const angle = (idx / total) * 2 * Math.PI - Math.PI / 2;
+      const angle = idx * step - Math.PI / 2;
       const x = centerX + layoutRadius * Math.cos(angle);
       const y = centerY + layoutRadius * Math.sin(angle);
-
-      // Count connections
-      const conns = edges.filter((e) => e.source === cat || e.target === cat).length;
-      const radius = Math.min(32, Math.max(18, 18 + conns * 2.2));
+      const conns = nodeConnections.get(cat) || 0;
+      const radius = Math.min(24, Math.max(12, 12 + conns * 1.5));
 
       return {
         id: cat,
@@ -105,11 +104,11 @@ export function AssociationNetwork({
         x,
         y,
         radius,
-        color: CATEGORY_COLORS[idx % CATEGORY_COLORS.length],
         connections: conns,
+        color: CATEGORY_COLORS[idx % CATEGORY_COLORS.length],
       };
     });
-  }, [categories, edges, centerX, centerY]);
+  }, [categories, centerX, centerY, layoutRadius, nodeConnections]);
 
   const nodeMap = useMemo(() => {
     const map = new Map<string, Node>();
@@ -117,28 +116,25 @@ export function AssociationNetwork({
     return map;
   }, [nodes]);
 
-  const maxLift = useMemo(() => {
-    return edges.reduce((max, e) => Math.max(max, e.lift), 1.5);
-  }, [edges]);
+  const maxLift = Math.max(...edges.map((e) => e.lift), 3);
 
   return (
     <div className="flex flex-col space-y-3">
       {/* Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-slate-50/80 p-3 rounded-xl border border-slate-200">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <Sliders className="h-3.5 w-3.5 text-blue-600" />
-            <span className="text-xs font-semibold text-slate-700">Min Lift Filter:</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-300">Min Lift Threshold:</span>
             <input
               type="range"
               min="1.0"
-              max="3.0"
+              max="3.5"
               step="0.05"
               value={minLift}
               onChange={(e) => setMinLift(parseFloat(e.target.value))}
-              className="w-28 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+              className="w-28 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-600"
             />
-            <span className="text-xs font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+            <span className="text-xs font-mono font-bold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800">
               {minLift.toFixed(2)}x
             </span>
           </div>
@@ -160,7 +156,7 @@ export function AssociationNetwork({
                   setActiveCategory(null);
                 }
               }}
-              className="pl-8 pr-2.5 py-1 text-xs rounded-lg border border-slate-200 bg-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 w-36 shadow-2xs"
+              className="pl-8 pr-2.5 py-1 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-blue-500 w-36 shadow-2xs"
             />
           </div>
         </div>
@@ -172,19 +168,19 @@ export function AssociationNetwork({
                 setActiveCategory(null);
                 setCategorySearch("");
               }}
-              className="text-xs text-rose-600 hover:text-rose-700 underline font-medium"
+              className="text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 underline font-medium"
             >
               Reset Isolation ({activeCategory})
             </button>
           )}
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-slate-500 dark:text-slate-400">
             {edges.length} active directed ties ({selectedClusterName})
           </span>
         </div>
       </div>
 
       {/* Interactive SVG Network */}
-      <div className="relative border border-slate-200 rounded-xl bg-white shadow-2xs overflow-hidden flex items-center justify-center p-3">
+      <div className="relative border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 shadow-2xs overflow-hidden flex items-center justify-center p-3">
         <svg
           viewBox={`0 0 ${width} ${height}`}
           className="w-full h-auto max-h-[520px] select-none"
@@ -211,7 +207,7 @@ export function AssociationNetwork({
               markerHeight="5"
               orient="auto-start-reverse"
             >
-              <path d="M 0 1 L 9 5 L 0 9 z" fill="#cbd5e1" />
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#64748b" />
             </marker>
           </defs>
 
@@ -221,7 +217,7 @@ export function AssociationNetwork({
             cy={centerY}
             r={layoutRadius}
             fill="none"
-            stroke="#f1f5f9"
+            className="stroke-slate-100 dark:stroke-slate-800"
             strokeWidth="1.5"
             strokeDasharray="4,4"
           />
@@ -230,7 +226,7 @@ export function AssociationNetwork({
             cy={centerY}
             r={layoutRadius * 0.65}
             fill="none"
-            stroke="#f8fafc"
+            className="stroke-slate-100/50 dark:stroke-slate-800/50"
             strokeWidth="1"
           />
 
@@ -239,15 +235,14 @@ export function AssociationNetwork({
             cx={centerX}
             cy={centerY}
             r={28}
-            fill="#f8fafc"
-            stroke="#e2e8f0"
+            className="fill-slate-50 dark:fill-slate-800 stroke-slate-200 dark:stroke-slate-700"
             strokeWidth="1.5"
           />
           <text
             x={centerX}
             y={centerY + 3}
             textAnchor="middle"
-            className="text-[9px] font-bold fill-slate-400 uppercase tracking-widest pointer-events-none"
+            className="text-[9px] font-bold fill-slate-400 dark:fill-slate-500 uppercase tracking-widest pointer-events-none"
           >
             Catalog
           </text>
@@ -271,7 +266,7 @@ export function AssociationNetwork({
               ? isHighLift
                 ? "#2563eb"
                 : "#64748b"
-              : "#e2e8f0";
+              : "#475569";
 
             return (
               <g key={`edge-${idx}`}>
@@ -333,9 +328,8 @@ export function AssociationNetwork({
                   r={node.radius}
                   fill={node.color}
                   opacity={opacity}
-                  stroke="#ffffff"
+                  className="stroke-white dark:stroke-slate-900 shadow-sm hover:scale-110 transition-transform"
                   strokeWidth={2.5}
-                  className="shadow-sm hover:scale-110 transition-transform"
                 />
 
                 {/* Node Label */}
@@ -344,7 +338,7 @@ export function AssociationNetwork({
                   y={node.y + node.radius + 14}
                   textAnchor="middle"
                   className={`text-[11px] font-semibold transition-colors ${
-                    isSelected ? "fill-blue-700 font-bold" : "fill-slate-700"
+                    isSelected ? "fill-blue-700 dark:fill-blue-400 font-bold" : "fill-slate-700 dark:fill-slate-300"
                   }`}
                   style={{ pointerEvents: "none" }}
                 >
@@ -386,7 +380,7 @@ export function AssociationNetwork({
         )}
       </div>
 
-      <div className="text-[11px] text-slate-400 flex justify-between items-center px-1">
+      <div className="text-[11px] text-slate-400 dark:text-slate-500 flex justify-between items-center px-1">
         <span>Arrows indicate purchase causality (Antecedent ➔ Consequent)</span>
         <span>Click any node to isolate bonds • Click any link to open Deep Inspector</span>
       </div>

@@ -83,11 +83,11 @@ export function ElbowCurveChart() {
       <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={points} margin={{ top: 15, right: 25, bottom: 10, left: 10 }}>
-            <CartesianGrid strokeDasharray="3,3" stroke="#e2e8f0" />
+            <CartesianGrid strokeDasharray="3,3" stroke="#94a3b8" opacity={0.25} />
             <XAxis
               dataKey="k"
-              label={{ value: "Number of Clusters (k)", position: "insideBottom", offset: -5, fontSize: 11, fill: "#64748b" }}
-              tick={{ fontSize: 11, fill: "#64748b" }}
+              label={{ value: "Number of Clusters (k)", position: "insideBottom", offset: -5, fontSize: 11, fill: "#94a3b8" }}
+              tick={{ fontSize: 11, fill: "#94a3b8" }}
             />
             {/* Left Y-Axis: Inertia */}
             <YAxis
@@ -109,7 +109,7 @@ export function ElbowCurveChart() {
                 name,
               ]}
               labelFormatter={(lbl) => `k = ${lbl} Clusters`}
-              contentStyle={{ fontSize: 11, borderRadius: 8 }}
+              contentStyle={{ fontSize: 11, borderRadius: 8, backgroundColor: "#0f172a", borderColor: "#334155", color: "#f8fafc" }}
             />
             <Legend wrapperStyle={{ fontSize: 11 }} />
             <Line

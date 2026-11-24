@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAppStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
 import {
@@ -19,6 +19,8 @@ import {
   RotateCcw,
   Sparkles,
   Command,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 export function CommandPalette() {
@@ -29,6 +31,8 @@ export function CommandPalette() {
     runAnalysis,
     updateConfig,
     config,
+    theme,
+    toggleTheme,
   } = useAppStore();
 
   const router = useRouter();
@@ -39,6 +43,7 @@ export function CommandPalette() {
   const actions = [
     // Navigation
     { id: "nav-overview", title: "Go to Overview Dashboard", icon: LayoutDashboard, category: "Navigation", run: () => router.push("/") },
+    { id: "nav-recommendations", title: "Go to Product Recommendations", icon: Sparkles, category: "Navigation", run: () => router.push("/recommendations") },
     { id: "nav-datasets", title: "Go to Dataset Management", icon: Database, category: "Navigation", run: () => router.push("/datasets") },
     { id: "nav-segments", title: "Go to Customer Segments", icon: Users2, category: "Navigation", run: () => router.push("/segmentation") },
     { id: "nav-rules", title: "Go to Association Rules", icon: GitBranch, category: "Navigation", run: () => router.push("/association-rules") },
@@ -47,6 +52,15 @@ export function CommandPalette() {
     { id: "nav-insights", title: "Go to Business Insights & Merchandising", icon: Lightbulb, category: "Navigation", run: () => router.push("/insights") },
     { id: "nav-reports", title: "Go to Reports & PDF Export", icon: FileSpreadsheet, category: "Navigation", run: () => router.push("/reports") },
     { id: "nav-settings", title: "Go to Settings & Configuration", icon: Settings, category: "Navigation", run: () => router.push("/settings") },
+
+    // Theme
+    {
+      id: "act-theme",
+      title: theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode",
+      icon: theme === "dark" ? Sun : Moon,
+      category: "Appearance",
+      run: () => toggleTheme(),
+    },
 
     // Datasets
     { id: "ds-omni", title: "Load Omnichannel Retail Dataset (1,850 tx)", icon: Sparkles, category: "Dataset Presets", run: () => loadPresetDataset("omnichannel") },
@@ -74,9 +88,9 @@ export function CommandPalette() {
         onClick={() => setIsCommandPaletteOpen(false)}
       />
 
-      <div className="relative w-full max-w-xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden z-10 animate-in fade-in-0 zoom-in-95 duration-150">
+      <div className="relative w-full max-w-xl rounded-2xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden z-10 animate-in fade-in-0 zoom-in-95 duration-150">
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3.5 border-b border-slate-200">
+        <div className="flex items-center px-4 py-3.5 border-b border-slate-200 dark:border-slate-800">
           <Search className="h-5 w-5 text-slate-400 mr-3 shrink-0" />
           <input
             type="text"
@@ -84,9 +98,9 @@ export function CommandPalette() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
-            className="w-full bg-transparent text-sm placeholder-slate-400 text-slate-900 focus:outline-none"
+            className="w-full bg-transparent text-sm placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-slate-100 focus:outline-none"
           />
-          <kbd className="hidden sm:inline-block rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-500 font-mono">
+          <kbd className="hidden sm:inline-block rounded bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 text-[10px] font-semibold text-slate-500 dark:text-slate-400 font-mono">
             ESC
           </kbd>
         </div>
@@ -103,31 +117,31 @@ export function CommandPalette() {
                     item.run();
                     setIsCommandPaletteOpen(false);
                   }}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-left group"
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-700 dark:hover:text-blue-400 transition-colors text-left group"
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className="h-4 w-4 text-slate-400 group-hover:text-blue-600 shrink-0" />
-                    <span className="font-medium text-slate-900 group-hover:text-blue-700">
+                    <Icon className="h-4 w-4 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 shrink-0" />
+                    <span className="font-medium text-slate-900 dark:text-slate-100 group-hover:text-blue-700 dark:group-hover:text-blue-400">
                       {item.title}
                     </span>
                   </div>
-                  <span className="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded font-mono group-hover:bg-blue-100 group-hover:text-blue-700">
+                  <span className="text-[10px] text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded font-mono group-hover:bg-blue-100 dark:group-hover:bg-blue-950 group-hover:text-blue-700 dark:group-hover:text-blue-300">
                     {item.category}
                   </span>
                 </button>
               );
             })
           ) : (
-            <div className="py-8 text-center text-slate-400">
+            <div className="py-8 text-center text-slate-400 dark:text-slate-500">
               No matching commands or actions found.
             </div>
           )}
         </div>
 
         {/* Footer tip */}
-        <div className="p-2.5 border-t border-slate-100 bg-slate-50 text-[11px] text-slate-400 flex items-center justify-between px-4">
+        <div className="p-2.5 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-[11px] text-slate-400 dark:text-slate-500 flex items-center justify-between px-4">
           <span>Navigate with mouse or keyboard</span>
-          <span>Antigravity AI Omnichannel Engine</span>
+          <span>SegmentMining AI Platform</span>
         </div>
       </div>
     </div>

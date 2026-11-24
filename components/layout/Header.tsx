@@ -45,32 +45,13 @@ export function Header({
     runAnalysis,
     setIsCommandPaletteOpen,
     result,
+    theme,
+    toggleTheme,
   } = useAppStore();
 
   const [isPresetMenuOpen, setIsPresetMenuOpen] = useState(false);
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    // Check local storage or system preference
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      setIsDark(true);
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setIsDark(true);
-    }
-  };
+  const isDark = theme === "dark";
 
   const getPresetIcon = (id: string) => {
     switch (id) {

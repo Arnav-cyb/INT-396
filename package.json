@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "tsc --module commonjs --moduleResolution node --target es2020 --outDir dist-test --esModuleInterop --skipLibCheck scripts/*.ts ml/*.ts lib/*.ts datasets/*.ts && node dist-test/scripts/run-all-tests.js"
   },
   "dependencies": {
     "clsx": "^2.1.1",

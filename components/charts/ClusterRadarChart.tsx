@@ -75,9 +75,9 @@ export function ClusterRadarChart({ clusters, selectedClusterId }: ClusterRadarC
     <div className="w-full h-80 flex flex-col items-center justify-center">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarMetrics}>
-          <PolarGrid stroke="#e2e8f0" strokeDasharray="3,3" />
-          <PolarAngleAxis dataKey="metric" tick={{ fontSize: 11, fill: "#475569", fontWeight: 500 }} />
-          <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fontSize: 9, fill: "#94a3b8" }} />
+          <PolarGrid stroke="#94a3b8" opacity={0.25} strokeDasharray="3,3" />
+          <PolarAngleAxis dataKey="metric" tick={{ fontSize: 11, fill: "#94a3b8", fontWeight: 500 }} />
+          <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fontSize: 9, fill: "#64748b" }} />
           {activeClusters.map((c) => (
             <Radar
               key={c.clusterId}
@@ -91,7 +91,7 @@ export function ClusterRadarChart({ clusters, selectedClusterId }: ClusterRadarC
           ))}
           <Tooltip
             formatter={(value: any, name: any) => [`${value}/100 Index`, name]}
-            contentStyle={{ fontSize: 11, borderRadius: 8, border: "1px solid #e2e8f0" }}
+            contentStyle={{ fontSize: 11, borderRadius: 8, backgroundColor: "#0f172a", borderColor: "#334155", color: "#f8fafc" }}
           />
           <Legend
             wrapperStyle={{ fontSize: 11, paddingTop: 10 }}

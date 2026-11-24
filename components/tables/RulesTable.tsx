@@ -74,7 +74,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="pl-9 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 w-56 shadow-2xs"
+              className="pl-9 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 w-56 shadow-2xs"
             />
           </div>
 
@@ -84,8 +84,8 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
               onClick={() => { setPresetFilter("all"); setCurrentPage(1); }}
               className={`px-2 py-1 rounded text-[11px] font-medium transition-colors ${
                 presetFilter === "all"
-                  ? "bg-slate-900 text-white font-semibold"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  ? "bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-semibold"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
               }`}
             >
               All Rules
@@ -95,7 +95,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
               className={`px-2 py-1 rounded text-[11px] font-medium transition-colors ${
                 presetFilter === "high_lift"
                   ? "bg-emerald-600 text-white font-semibold"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
               }`}
             >
               High Lift (≥2.0x)
@@ -105,7 +105,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
               className={`px-2 py-1 rounded text-[11px] font-medium transition-colors ${
                 presetFilter === "stat_sig"
                   ? "bg-blue-600 text-white font-semibold"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
               }`}
             >
               Stat. Significant (p&lt;0.05)
@@ -115,7 +115,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
               className={`px-2 py-1 rounded text-[11px] font-medium transition-colors ${
                 presetFilter === "cohort"
                   ? "bg-purple-600 text-white font-semibold"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
               }`}
             >
               Cohort Specific
@@ -124,7 +124,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
         </div>
 
         {/* Sort Controls */}
-        <div className="flex items-center gap-1.5 text-xs text-slate-600">
+        <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400">
           <span className="font-medium">Sort:</span>
           {(["lift", "confidence", "support", "leverage", "conviction"] as SortField[]).map((f) => (
             <button
@@ -132,8 +132,8 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
               onClick={() => handleSort(f)}
               className={`px-2 py-1 rounded text-xs capitalize transition-colors ${
                 sortField === f
-                  ? "bg-blue-100 text-blue-700 font-semibold"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  ? "bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-semibold"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
               }`}
             >
               {f} {sortField === f ? (sortAsc ? "↑" : "↓") : ""}
@@ -143,9 +143,9 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
       </div>
 
       {/* Table Container */}
-      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-2xs">
-        <table className="min-w-full divide-y divide-slate-200 text-left text-xs">
-          <thead className="bg-slate-50 font-semibold text-slate-700">
+      <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs">
+        <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 text-left text-xs">
+          <thead className="bg-slate-50 dark:bg-slate-950 font-semibold text-slate-700 dark:text-slate-300">
             <tr>
               <th className="px-4 py-3">Antecedent (If Bought)</th>
               <th className="px-2 py-3 w-6 text-center"></th>
@@ -158,7 +158,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
                 Confidence
               </th>
               <th className="px-3 py-3 text-right cursor-pointer" onClick={() => handleSort("lift")}>
-                <div className="inline-flex items-center gap-1 text-blue-700">
+                <div className="inline-flex items-center gap-1 text-blue-700 dark:text-blue-400">
                   <span>Lift</span>
                   <ArrowUpDown className="h-3 w-3" />
                 </div>
@@ -169,7 +169,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
               <th className="px-3 py-3 text-center">Detail</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {paginatedRules.length > 0 ? (
               paginatedRules.map((rule) => {
                 const isHighLift = rule.lift >= 2.0;
@@ -178,15 +178,15 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
                   <tr
                     key={rule.id}
                     onClick={() => setSelectedRuleForDrawer(rule)}
-                    className="hover:bg-blue-50/50 transition-colors cursor-pointer group"
+                    className="hover:bg-blue-50/50 dark:hover:bg-slate-850/60 transition-colors cursor-pointer group"
                   >
                     {/* Antecedent */}
-                    <td className="px-4 py-3 font-medium text-slate-900">
+                    <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">
                       <div className="flex flex-wrap gap-1">
                         {rule.antecedent.map((ant) => (
                           <span
                             key={ant}
-                            className="inline-flex items-center px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 text-[11px] font-semibold"
+                            className="inline-flex items-center px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 text-[11px] font-semibold"
                           >
                             {ant}
                           </span>
@@ -200,12 +200,12 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
                     </td>
 
                     {/* Consequent */}
-                    <td className="px-4 py-3 font-medium text-slate-900">
+                    <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">
                       <div className="flex flex-wrap gap-1">
                         {rule.consequent.map((cons) => (
                           <span
                             key={cons}
-                            className="inline-flex items-center px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-[11px] font-semibold"
+                            className="inline-flex items-center px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 text-[11px] font-semibold"
                           >
                             {cons}
                           </span>
@@ -224,12 +224,12 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
                     </td>
 
                     {/* Support */}
-                    <td className="px-3 py-3 text-right font-mono text-slate-600">
+                    <td className="px-3 py-3 text-right font-mono text-slate-600 dark:text-slate-300">
                       {(rule.support * 100).toFixed(1)}%
                     </td>
 
                     {/* Confidence */}
-                    <td className="px-3 py-3 text-right font-mono text-slate-600">
+                    <td className="px-3 py-3 text-right font-mono text-slate-600 dark:text-slate-300">
                       {(rule.confidence * 100).toFixed(1)}%
                     </td>
 
@@ -238,8 +238,8 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
                       <span
                         className={`font-bold px-1.5 py-0.5 rounded ${
                           isHighLift
-                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                            : "bg-blue-50 text-blue-700"
+                            ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800"
+                            : "bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300"
                         }`}
                       >
                         {rule.lift.toFixed(2)}x
@@ -247,17 +247,17 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
                     </td>
 
                     {/* Leverage */}
-                    <td className="px-3 py-3 text-right font-mono text-slate-500">
+                    <td className="px-3 py-3 text-right font-mono text-slate-500 dark:text-slate-400">
                       {rule.leverage > 0 ? `+${rule.leverage.toFixed(3)}` : rule.leverage.toFixed(3)}
                     </td>
 
                     {/* Conviction */}
-                    <td className="px-3 py-3 text-right font-mono text-slate-500">
+                    <td className="px-3 py-3 text-right font-mono text-slate-500 dark:text-slate-400">
                       {rule.conviction >= 99 ? "∞" : rule.conviction.toFixed(2)}
                     </td>
 
                     {/* Business Action */}
-                    <td className="px-4 py-3 text-slate-600 text-[11px] max-w-[220px]">
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300 text-[11px] max-w-[220px]">
                       <div className="flex items-start gap-1">
                         {isHighLift && <Sparkles className="h-3.5 w-3.5 text-amber-500 shrink-0 mt-0.5" />}
                         <span className="line-clamp-2">{rule.businessAction}</span>
@@ -271,7 +271,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
                           e.stopPropagation();
                           setSelectedRuleForDrawer(rule);
                         }}
-                        className="p-1 rounded text-slate-400 group-hover:text-blue-600 hover:bg-blue-100 transition-colors"
+                        className="p-1 rounded text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 hover:bg-blue-100 dark:hover:bg-slate-800 transition-colors"
                         title="Open Deep Inspector"
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
@@ -282,7 +282,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
               })
             ) : (
               <tr>
-                <td colSpan={11} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={11} className="px-4 py-8 text-center text-slate-400 dark:text-slate-500">
                   No association rules match the specified search or filter thresholds.
                 </td>
               </tr>
@@ -292,7 +292,7 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-between px-2 pt-1 text-xs text-slate-500">
+      <div className="flex items-center justify-between px-2 pt-1 text-xs text-slate-500 dark:text-slate-400">
         <span>
           Page {currentPage} of {totalPages}
         </span>
@@ -300,14 +300,14 @@ export function RulesTable({ rules, title = "Discovered Association Rules" }: Ru
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="px-2.5 py-1 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Previous
           </button>
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="px-2.5 py-1 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Next
           </button>

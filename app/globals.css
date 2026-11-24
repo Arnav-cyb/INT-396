@@ -2,31 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-}
+@layer base {
+  :root {
+    --background: #f8fafc;
+    --foreground: #0f172a;
+  }
 
-.dark {
-  --background: #090d16;
-  --foreground: #f8fafc;
-}
+  .dark {
+    --background: #090d16;
+    --foreground: #f8fafc;
+  }
 
-* {
-  border-color: #e2e8f0;
-}
+  * {
+    border-color: #e2e8f0;
+  }
 
-.dark * {
-  border-color: #1e293b;
-}
+  .dark * {
+    border-color: #1e293b;
+  }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
 }
 
 /* Polished scrollbars */

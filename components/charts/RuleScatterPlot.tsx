@@ -66,19 +66,19 @@ export function RuleScatterPlot({ rules }: RuleScatterPlotProps) {
       <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 15, right: 20, bottom: 20, left: 0 }}>
-            <CartesianGrid strokeDasharray="3,3" stroke="#e2e8f0" />
+            <CartesianGrid strokeDasharray="3,3" stroke="#94a3b8" opacity={0.25} />
             <XAxis
               type="number"
               dataKey="x"
               name="Support"
               unit="%"
-              tick={{ fontSize: 10, fill: "#64748b" }}
+              tick={{ fontSize: 10, fill: "#94a3b8" }}
               label={{
                 value: "Rule Support (Frequency in Catalog %)",
                 position: "insideBottom",
                 offset: -10,
                 fontSize: 11,
-                fill: "#64748b",
+                fill: "#94a3b8",
                 fontWeight: 600,
               }}
             />
@@ -88,13 +88,13 @@ export function RuleScatterPlot({ rules }: RuleScatterPlotProps) {
               name="Confidence"
               unit="%"
               domain={[0, 100]}
-              tick={{ fontSize: 10, fill: "#64748b" }}
+              tick={{ fontSize: 10, fill: "#94a3b8" }}
               label={{
                 value: "Confidence (Conditional Probability %)",
                 angle: -90,
                 position: "insideLeft",
                 fontSize: 11,
-                fill: "#64748b",
+                fill: "#94a3b8",
                 fontWeight: 600,
               }}
             />
@@ -135,7 +135,7 @@ export function RuleScatterPlot({ rules }: RuleScatterPlotProps) {
         </ResponsiveContainer>
       </div>
 
-      <div className="flex items-center justify-between text-[11px] text-slate-500 px-2">
+      <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 px-2">
         <span>Bubble area is scaled proportional to Rule Lift (larger = stronger synergy)</span>
         <span>Red dashed lines indicate your active algorithmic pruning thresholds</span>
       </div>

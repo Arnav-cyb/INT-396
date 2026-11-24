@@ -54,10 +54,10 @@ export default function CrossClusterPage() {
       {/* Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-slate-900">
+          <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">
             Cross-Cluster Association Discovery
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Detecting category relationships that only emerge within specific customer segments vs universal cross-catalog patterns.
           </p>
         </div>
@@ -65,60 +65,60 @@ export default function CrossClusterPage() {
 
       {/* Cross-Cluster Summary Banners */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-2xs">
+        <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Segment-Specific Rules
             </span>
             <Flame className="h-4 w-4 text-amber-500" />
           </div>
-          <div className="text-2xl font-bold text-slate-900 mt-1">
+          <div className="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-1">
             {clusterSpecificCount}
           </div>
-          <p className="text-[11px] text-slate-400 mt-0.5">
+          <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
             Affinities unique to a single customer cohort
           </p>
         </div>
 
-        <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-2xs">
+        <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Universal Catalog Rules
             </span>
             <CheckCircle2 className="h-4 w-4 text-emerald-500" />
           </div>
-          <div className="text-2xl font-bold text-slate-900 mt-1">
+          <div className="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-1">
             {universalCount}
           </div>
-          <p className="text-[11px] text-slate-400 mt-0.5">
+          <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
             Consistent association across all customer groups
           </p>
         </div>
 
-        <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-2xs">
+        <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Divergent Behavioral Rules
             </span>
             <AlertCircle className="h-4 w-4 text-purple-500" />
           </div>
-          <div className="text-2xl font-bold text-slate-900 mt-1">
+          <div className="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-1">
             {divergentCount}
           </div>
-          <p className="text-[11px] text-slate-400 mt-0.5">
+          <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
             High variance in lift between demographic segments
           </p>
         </div>
       </div>
 
       {/* Cross-Cluster Rules Comparison Table */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-2xs space-y-4">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-2xs space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-base font-bold text-slate-900">
+            <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
               Cross-Cluster Rule Comparison Matrix
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Compare rule strength across each customer cluster to discover high-value targeted cross-selling opportunities (click any row to inspect).
             </p>
           </div>
@@ -132,14 +132,14 @@ export default function CrossClusterPage() {
                 placeholder="Search category or segment..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-9 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 w-56 shadow-2xs"
+                className="pl-9 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 w-56 shadow-2xs"
               />
             </div>
 
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="px-2.5 py-1.5 text-xs rounded-lg border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs"
+              className="px-2.5 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs"
             >
               <option value="all">All Classifications</option>
               <option value="cluster_specific">Cluster Specific</option>
@@ -150,9 +150,9 @@ export default function CrossClusterPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-2xs">
-          <table className="min-w-full divide-y divide-slate-200 text-left text-xs">
-            <thead className="bg-slate-50 font-semibold text-slate-700">
+        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs">
+          <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 text-left text-xs">
+            <thead className="bg-slate-50 dark:bg-slate-950 font-semibold text-slate-700 dark:text-slate-300">
               <tr>
                 <th className="px-4 py-3">Association Rule (Antecedent ➔ Consequent)</th>
                 <th className="px-3 py-3">Classification</th>
@@ -167,7 +167,7 @@ export default function CrossClusterPage() {
                 <th className="px-3 py-3 text-center">Inspect</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
               {filteredComparisons.slice(0, 15).map((comp) => {
                 const badgeVariant =
                   comp.type === "cluster_specific"
@@ -201,13 +201,13 @@ export default function CrossClusterPage() {
                   <tr
                     key={comp.ruleKey}
                     onClick={() => setSelectedRuleForDrawer(simulatedRule)}
-                    className="hover:bg-blue-50/50 transition-colors cursor-pointer group"
+                    className="hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-colors cursor-pointer group"
                   >
-                    <td className="px-4 py-3 font-medium text-slate-900">
+                    <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-semibold text-blue-700">{comp.antecedent.join(" & ")}</span>
+                        <span className="font-semibold text-blue-700 dark:text-blue-400">{comp.antecedent.join(" & ")}</span>
                         <ArrowRight className="h-3 w-3 text-slate-400 shrink-0" />
-                        <span className="font-semibold text-indigo-700">{comp.consequent.join(" & ")}</span>
+                        <span className="font-semibold text-indigo-700 dark:text-indigo-400">{comp.consequent.join(" & ")}</span>
                       </div>
                     </td>
 
@@ -217,7 +217,7 @@ export default function CrossClusterPage() {
                       </Badge>
                     </td>
 
-                    <td className="px-3 py-3 text-right font-mono text-slate-700 font-semibold">
+                    <td className="px-3 py-3 text-right font-mono text-slate-700 dark:text-slate-300 font-semibold">
                       {comp.globalLift.toFixed(2)}x
                     </td>
 
@@ -231,26 +231,26 @@ export default function CrossClusterPage() {
                             <span
                               className={`px-1.5 py-0.5 rounded ${
                                 isDominant
-                                  ? "bg-blue-100 text-blue-800 font-bold"
-                                  : "text-slate-600"
+                                  ? "bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 font-bold"
+                                  : "text-slate-600 dark:text-slate-400"
                               }`}
                             >
                               {stat.lift.toFixed(2)}x
                             </span>
                           ) : (
-                            <span className="text-slate-300">—</span>
+                            <span className="text-slate-300 dark:text-slate-600">—</span>
                           )}
                         </td>
                       );
                     })}
 
-                    <td className="px-3 py-3 text-right font-mono text-slate-500">
+                    <td className="px-3 py-3 text-right font-mono text-slate-500 dark:text-slate-400">
                       σ² = {comp.liftVariance.toFixed(2)}
                     </td>
 
-                    <td className="px-4 py-3 text-[11px] text-slate-600 max-w-[260px]">
-                      <div className="font-medium text-slate-900 line-clamp-1">{comp.crossSellingOpportunity}</div>
-                      <div className="text-slate-400 line-clamp-1">{comp.actionRecommendation}</div>
+                    <td className="px-4 py-3 text-[11px] text-slate-600 dark:text-slate-300 max-w-[260px]">
+                      <div className="font-medium text-slate-900 dark:text-slate-100 line-clamp-1">{comp.crossSellingOpportunity}</div>
+                      <div className="text-slate-400 dark:text-slate-500 line-clamp-1">{comp.actionRecommendation}</div>
                     </td>
 
                     <td className="px-3 py-3 text-center">
@@ -259,7 +259,7 @@ export default function CrossClusterPage() {
                           e.stopPropagation();
                           setSelectedRuleForDrawer(simulatedRule);
                         }}
-                        className="p-1 rounded text-slate-400 group-hover:text-blue-600 hover:bg-blue-100 transition-colors"
+                        className="p-1 rounded text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-950 transition-colors"
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                       </button>
@@ -273,19 +273,19 @@ export default function CrossClusterPage() {
       </div>
 
       {/* Advanced Cross-Cluster Visualizations: Alluvial Flow & Affinity Heatmap */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-2xs space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-2xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-blue-600 uppercase tracking-wider mb-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-0.5">
               <Share2 className="h-4 w-4" />
               <span>Multi-Dimensional Cohort Topology</span>
             </div>
-            <h2 className="text-base font-bold text-slate-900">
+            <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
               {vizMode === "alluvial"
                 ? "Alluvial Transaction Flow Diagram (Antecedent ➔ Cluster Cohort ➔ Consequent)"
                 : "Category Affinity & Co-Occurrence Matrix Heatmap"}
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               {vizMode === "alluvial"
                 ? "Visualizing multi-stage purchase pathways across customer segments; ribbon thickness scales with association lift."
                 : "Interactive symmetric matrix of bivariate co-purchases, lift ratios, and transaction support."}
@@ -293,13 +293,13 @@ export default function CrossClusterPage() {
           </div>
 
           {/* Toggle Switcher */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg self-start sm:self-auto">
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg self-start sm:self-auto">
             <button
               onClick={() => setVizMode("alluvial")}
               className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                 vizMode === "alluvial"
-                  ? "bg-white text-slate-900 shadow-2xs"
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-2xs"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
               }`}
             >
               Alluvial Flow
@@ -308,8 +308,8 @@ export default function CrossClusterPage() {
               onClick={() => setVizMode("heatmap")}
               className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                 vizMode === "heatmap"
-                  ? "bg-white text-slate-900 shadow-2xs"
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-2xs"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
               }`}
             >
               Affinity Heatmap
