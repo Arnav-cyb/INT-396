@@ -6,11 +6,17 @@
   :root {
     --background: #f8fafc;
     --foreground: #0f172a;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --border: #e2e8f0;
   }
 
   .dark {
     --background: #090d16;
     --foreground: #f8fafc;
+    --card: #0f172a;
+    --card-foreground: #f8fafc;
+    --border: #1e293b;
   }
 
   * {
@@ -28,6 +34,35 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+/* Fail-safe dark mode utility overrides: ensures zero white cards or black text in dark mode */
+@layer utilities {
+  .dark .bg-white:not([class*="dark:bg-"]) {
+    background-color: #0f172a !important;
+  }
+  .dark .bg-slate-50:not([class*="dark:bg-"]) {
+    background-color: #0b1120 !important;
+  }
+  .dark .bg-slate-100:not([class*="dark:bg-"]) {
+    background-color: #1e293b !important;
+  }
+  .dark .text-slate-900:not([class*="dark:text-"]) {
+    color: #f8fafc !important;
+  }
+  .dark .text-slate-800:not([class*="dark:text-"]) {
+    color: #f1f5f9 !important;
+  }
+  .dark .text-slate-700:not([class*="dark:text-"]) {
+    color: #cbd5e1 !important;
+  }
+  .dark .text-slate-600:not([class*="dark:text-"]) {
+    color: #94a3b8 !important;
+  }
+  .dark .border-slate-200:not([class*="dark:border-"]),
+  .dark .border-slate-100:not([class*="dark:border-"]) {
+    border-color: #1e293b !important;
   }
 }
 

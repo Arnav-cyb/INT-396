@@ -15,6 +15,7 @@ import {
   Settings,
   Sparkles,
   ChevronRight,
+  ChevronLeft,
   ShieldCheck,
   Cpu,
   Layers,
@@ -71,29 +72,45 @@ export function Sidebar({
   onNavigate: () => void;
 }) {
   const pathname = usePathname();
-  const { result, config } = useAppStore();
+  const { result, config, toggleSidebar } = useAppStore();
 
   return (
     <aside
       id="primary-navigation"
-      className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col border-r border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-[1px_0_4px_rgba(0,0,0,0.02)] transition-transform duration-200 lg:sticky lg:top-0 lg:z-30 lg:translate-x-0 ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
+      aria-hidden={!isOpen}
+      className={`fixed inset-y-0 left-0 z-50 flex h-screen flex-col border-r border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-[1px_0_4px_rgba(0,0,0,0.02)] transition-all duration-300 ease-in-out lg:sticky lg:top-0 lg:z-30 ${
+        isOpen
+          ? "w-64 translate-x-0 opacity-100 visible"
+          : "w-0 -translate-x-full opacity-0 invisible overflow-hidden border-r-0 pointer-events-none lg:w-0"
       }`}
     >
-      {/* Brand Header */}
-      <div className="h-16 flex items-center px-5 border-b border-slate-100 dark:border-slate-800 gap-3">
-        <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/20 ring-1 ring-blue-500/20">
-          <Sparkles className="h-4.5 w-4.5" />
+      <div className="w-64 h-full flex flex-col shrink-0">
+        {/* Brand Header */}
+        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-100 dark:border-slate-800 gap-2 shrink-0">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/20 ring-1 ring-blue-500/20 shrink-0">
+              <Sparkles className="h-4.5 w-4.5" />
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="font-bold text-sm tracking-tight text-slate-900 dark:text-slate-100 leading-tight truncate">
+                SegmentMining AI
+              </span>
+              <span className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                Enterprise Analytics
+              </span>
+            </div>
+          </div>
+          {/* Quick Collapse Button inside Sidebar */}
+          <button
+            type="button"
+            onClick={toggleSidebar}
+            aria-label="Collapse sidebar"
+            title="Collapse sidebar"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
         </div>
-        <div className="flex flex-col min-w-0">
-          <span className="font-bold text-sm tracking-tight text-slate-900 dark:text-slate-100 leading-tight truncate">
-            SegmentMining AI
-          </span>
-          <span className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-            Enterprise Analytics
-          </span>
-        </div>
-      </div>
 
       {/* Navigation Groups */}
       <div className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
@@ -199,6 +216,7 @@ export function Sidebar({
           </div>
         </div>
         <span className="h-2 w-2 rounded-full bg-emerald-500 ring-4 ring-emerald-50 dark:ring-emerald-950/60" title="System Operational" />
+      </div>
       </div>
     </aside>
   );

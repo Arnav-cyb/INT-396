@@ -43,10 +43,13 @@ interface AppContextType {
   selectedCategory: string | "all";
   selectedRuleForDrawer: AssociationRule | null;
   theme: "light" | "dark";
+  isSidebarOpen: boolean;
   isCommandPaletteOpen: boolean;
   isCopilotOpen: boolean;
   toggleTheme: () => void;
   setTheme: (theme: "light" | "dark") => void;
+  toggleSidebar: () => void;
+  setSidebarOpen: (open: boolean) => void;
   setIsCommandPaletteOpen: (open: boolean) => void;
   setIsCopilotOpen: (open: boolean) => void;
   setSelectedRuleForDrawer: (rule: AssociationRule | null) => void;
@@ -86,6 +89,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [selectedCategory, setSelectedCategory] = useState<string | "all">("all");
   const [selectedRuleForDrawer, setSelectedRuleForDrawer] = useState<AssociationRule | null>(null);
   const [theme, setThemeState] = useState<"light" | "dark">("light");
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
   const [isCopilotOpen, setIsCopilotOpen] = useState<boolean>(false);
 
@@ -100,8 +104,33 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       } else {
         document.documentElement.classList.remove("dark");
       }
+
+      // Initialize sidebar state
+      const savedSidebar = localStorage.getItem("sidebarOpen");
+      if (savedSidebar !== null) {
+        setIsSidebarOpen(savedSidebar === "true");
+      } else if (window.innerWidth < 1024) {
+        setIsSidebarOpen(false);
+      }
     } catch (e) {}
   }, []);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("sidebarOpen", String(next));
+      } catch (e) {}
+      return next;
+    });
+  };
+
+  const setSidebarOpen = (open: boolean) => {
+    setIsSidebarOpen(open);
+    try {
+      localStorage.setItem("sidebarOpen", String(open));
+    } catch (e) {}
+  };
 
   const setTheme = (newTheme: "light" | "dark") => {
     setThemeState(newTheme);
@@ -223,6 +252,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         theme,
         toggleTheme,
         setTheme,
+        isSidebarOpen,
+        toggleSidebar,
+        setSidebarOpen,
         isCommandPaletteOpen,
         isCopilotOpen,
         setIsCommandPaletteOpen,

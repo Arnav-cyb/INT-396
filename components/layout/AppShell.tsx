@@ -10,27 +10,31 @@ import { useAppStore } from "@/lib/store";
 import { Sparkles } from "lucide-react";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-  const { isCopilotOpen, setIsCopilotOpen } = useAppStore();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { isCopilotOpen, setIsCopilotOpen, isSidebarOpen, setSidebarOpen, toggleSidebar } = useAppStore();
 
   return (
-    <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans">
+    <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans transition-colors duration-200">
+      {/* Mobile backdrop overlay */}
       {isSidebarOpen && (
         <button
           type="button"
           aria-label="Close navigation menu"
-          className="fixed inset-0 z-40 bg-slate-950/40 backdrop-blur-[1px] lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-xs lg:hidden transition-opacity duration-300"
+          onClick={() => setSidebarOpen(false)}
         />
       )}
       <Sidebar
         isOpen={isSidebarOpen}
-        onNavigate={() => setIsSidebarOpen(false)}
+        onNavigate={() => {
+          if (typeof window !== "undefined" && window.innerWidth < 1024) {
+            setSidebarOpen(false);
+          }
+        }}
       />
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out">
         <Header
           isSidebarOpen={isSidebarOpen}
-          onToggleSidebar={() => setIsSidebarOpen((open) => !open)}
+          onToggleSidebar={toggleSidebar}
         />
         <main className="flex-1 p-4 sm:p-6 md:p-8 max-w-7xl w-full mx-auto space-y-6">
           {children}

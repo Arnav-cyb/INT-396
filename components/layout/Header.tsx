@@ -27,12 +27,12 @@ import {
 import { Button } from "../ui/Button";
 
 export function Header({
-  isSidebarOpen,
-  onToggleSidebar,
+  isSidebarOpen: propIsSidebarOpen,
+  onToggleSidebar: propOnToggleSidebar,
 }: {
-  isSidebarOpen: boolean;
-  onToggleSidebar: () => void;
-}) {
+  isSidebarOpen?: boolean;
+  onToggleSidebar?: () => void;
+} = {}) {
   const {
     datasetName,
     activePresetId,
@@ -47,7 +47,12 @@ export function Header({
     result,
     theme,
     toggleTheme,
+    isSidebarOpen: storeIsSidebarOpen,
+    toggleSidebar: storeToggleSidebar,
   } = useAppStore();
+
+  const isSidebarOpen = propIsSidebarOpen !== undefined ? propIsSidebarOpen : storeIsSidebarOpen;
+  const onToggleSidebar = propOnToggleSidebar || storeToggleSidebar;
 
   const [isPresetMenuOpen, setIsPresetMenuOpen] = useState(false);
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
@@ -69,17 +74,20 @@ export function Header({
   return (
     <>
       <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between gap-2 border-b border-slate-200/80 bg-white/95 px-3 backdrop-blur dark:bg-slate-950/95 sm:px-6">
-        {/* Left: Dataset Switcher & Quick Search */}
+        {/* Left: Hamburger Sidebar Toggle & Dataset Switcher */}
         <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <button
             type="button"
-            aria-label={isSidebarOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-label={isSidebarOpen ? "Collapse navigation sidebar" : "Open navigation sidebar"}
+            title={isSidebarOpen ? "Collapse sidebar (Click to hide)" : "Open sidebar (Click to show)"}
             aria-expanded={isSidebarOpen}
             aria-controls="primary-navigation"
             onClick={onToggleSidebar}
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-900 lg:hidden"
+            className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/40 ${
+              isSidebarOpen ? "text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300"
+            }`}
           >
-            {isSidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            <Menu className="h-4.5 w-4.5" />
           </button>
           {/* Dataset Preset Dropdown Menu */}
           <div className="relative">
