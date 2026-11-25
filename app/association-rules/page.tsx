@@ -12,7 +12,24 @@ export default function AssociationRulesPage() {
   const [selectedClusterScope, setSelectedClusterScope] = useState<string>("all");
   const [activeTab, setActiveTab] = useState<"table" | "scatter">("table");
 
-  if (!result) return null;
+  if (isLoading || !result) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[460px] space-y-4">
+        <div className="relative">
+          <div className="h-12 w-12 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+          <Sparkles className="h-4 w-4 text-blue-600 absolute inset-0 m-auto" />
+        </div>
+        <div className="text-center space-y-1">
+          <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+            Mining Association Rules with FP-Growth & Apriori...
+          </p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">
+            Evaluating Lift, Confidence, Support, Leverage, and Fisher Exact p-values
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const globalRules = result.globalRules;
   const clusterRulesMap = result.clusterRules;

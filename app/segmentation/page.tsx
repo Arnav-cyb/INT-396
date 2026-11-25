@@ -6,7 +6,7 @@ import { ClusterScatterPlot } from "@/components/charts/ClusterScatterPlot";
 import { ClusterComparisonTable } from "@/components/tables/ClusterComparisonTable";
 import { ClusterRadarChart } from "@/components/charts/ClusterRadarChart";
 import { ElbowCurveChart } from "@/components/charts/ElbowCurveChart";
-import { Users2, Sliders, Play, Award, Activity, Compass, PieChart, ShieldCheck, Zap } from "lucide-react";
+import { Users2, Sliders, Play, Award, Activity, Compass, PieChart, ShieldCheck, Zap, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 export default function SegmentationPage() {
@@ -20,7 +20,24 @@ export default function SegmentationPage() {
     setSelectedClusterId,
   } = useAppStore();
 
-  if (!result) return null;
+  if (isLoading || !result) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[460px] space-y-4">
+        <div className="relative">
+          <div className="h-12 w-12 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+          <Sparkles className="h-4 w-4 text-blue-600 absolute inset-0 m-auto" />
+        </div>
+        <div className="text-center space-y-1">
+          <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+            Clustering Customer Segments & Behavioral Cohorts...
+          </p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">
+            Evaluating Silhouette Score, Davies-Bouldin Index, and PCA Eigenvectors
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const clustering = result.clustering;
   const activeCluster =

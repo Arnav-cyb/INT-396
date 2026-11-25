@@ -19,19 +19,14 @@ import {
 } from "lucide-react";
 
 export default function CrossClusterPage() {
-  const { result, setSelectedRuleForDrawer } = useAppStore();
+  const { result, setSelectedRuleForDrawer, isLoading } = useAppStore();
   const [filterType, setFilterType] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [vizMode, setVizMode] = useState<"alluvial" | "heatmap">("alluvial");
 
-  if (!result) return null;
+  const comparisons = result?.crossClusterComparisons || [];
 
-  const comparisons = result.crossClusterComparisons;
-  const clusters = result.clustering.clusters;
-  const matrix = result.coOccurrenceMatrix;
-  const categories = result.datasetMetadata.categories;
-
-  // Filter comparisons
+  // Filter comparisons - ALL hooks MUST execute at top level unconditionally before any return
   const filteredComparisons = useMemo(() => {
     return comparisons.filter((c) => {
       const matchType = filterType === "all" || c.type === filterType;
@@ -44,6 +39,29 @@ export default function CrossClusterPage() {
       return matchType && matchSearch;
     });
   }, [comparisons, filterType, search]);
+
+  if (isLoading || !result) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[460px] space-y-4">
+        <div className="relative">
+          <div className="h-12 w-12 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+          <Sparkles className="h-4 w-4 text-blue-600 absolute inset-0 m-auto" />
+        </div>
+        <div className="text-center space-y-1">
+          <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+            Analyzing Cross-Cluster Differential Associations...
+          </p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">
+            Evaluating cohort lift differentials and generating co-occurrence matrices
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const clusters = result.clustering.clusters;
+  const matrix = result.coOccurrenceMatrix;
+  const categories = result.datasetMetadata.categories;
 
   const clusterSpecificCount = comparisons.filter((c) => c.type === "cluster_specific").length;
   const universalCount = comparisons.filter((c) => c.type === "universal").length;
