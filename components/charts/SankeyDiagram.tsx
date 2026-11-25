@@ -155,23 +155,32 @@ export function SankeyDiagram({ comparisons, clusters, categories }: SankeyDiagr
             return (
               <g
                 key={rib.id}
-                className="cursor-pointer transition-all duration-150"
+                className="cursor-pointer"
                 onMouseEnter={() => setHoveredRibbon(rib)}
                 onMouseLeave={() => setHoveredRibbon(null)}
               >
+                {/* Invisible wide hit area for butter-smooth mouse tracking */}
+                <path d={path1} fill="none" stroke="transparent" strokeWidth={24} pointerEvents="stroke" />
+                <path d={path2} fill="none" stroke="transparent" strokeWidth={24} pointerEvents="stroke" />
+
+                {/* Visible styled ribbon paths */}
                 <path
                   d={path1}
                   fill="none"
                   stroke={rib.color}
-                  strokeWidth={rib.width}
+                  strokeWidth={hoveredRibbon?.id === rib.id ? rib.width + 2 : rib.width}
                   opacity={opacity}
+                  pointerEvents="none"
+                  className="transition-opacity duration-150"
                 />
                 <path
                   d={path2}
                   fill="none"
                   stroke={rib.color}
-                  strokeWidth={rib.width}
+                  strokeWidth={hoveredRibbon?.id === rib.id ? rib.width + 2 : rib.width}
                   opacity={opacity}
+                  pointerEvents="none"
+                  className="transition-opacity duration-150"
                 />
               </g>
             );
@@ -281,25 +290,27 @@ export function SankeyDiagram({ comparisons, clusters, categories }: SankeyDiagr
           })}
         </svg>
 
-        {/* Hovered Ribbon Info Pill */}
-        {hoveredRibbon ? (
-          <div className="absolute bottom-3 left-4 right-4 bg-slate-900/95 text-white p-2.5 rounded-xl shadow-xl text-xs flex items-center justify-between backdrop-blur border border-slate-700">
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-blue-400">{hoveredRibbon.sourceName}</span>
-              <span className="text-slate-400">➔ routed through</span>
-              <span className="font-bold text-amber-300">{hoveredRibbon.clusterName}</span>
-              <span className="text-slate-400">➔ unlocks</span>
-              <span className="font-bold text-indigo-400">{hoveredRibbon.targetName}</span>
+        {/* Fixed-height Info Bar: prevents layout shift and eliminates hover vibration */}
+        <div className="min-h-[44px] mt-3 px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs transition-colors">
+          {hoveredRibbon ? (
+            <>
+              <div className="flex items-center gap-2 truncate">
+                <span className="font-bold text-blue-600 dark:text-blue-400">{hoveredRibbon.sourceName}</span>
+                <span className="text-slate-400">➔ routed through</span>
+                <span className="font-bold text-amber-600 dark:text-amber-400">{hoveredRibbon.clusterName}</span>
+                <span className="text-slate-400">➔ unlocks</span>
+                <span className="font-bold text-indigo-600 dark:text-indigo-400">{hoveredRibbon.targetName}</span>
+              </div>
+              <div className="font-mono font-bold text-emerald-600 dark:text-emerald-400 shrink-0 ml-3">
+                Synergy Lift: {hoveredRibbon.lift.toFixed(2)}x
+              </div>
+            </>
+          ) : (
+            <div className="text-[11px] text-slate-400 dark:text-slate-500 text-center w-full">
+              Hover over any flow ribbon or click any category node to inspect cross-cluster causality metrics
             </div>
-            <div className="font-mono font-bold text-emerald-400">
-              Synergy Lift: {hoveredRibbon.lift.toFixed(2)}x
-            </div>
-          </div>
-        ) : (
-          <div className="text-[11px] text-slate-400 text-center pt-2">
-            Hover over any ribbon or click any node box to trace cross-cluster causality flow
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

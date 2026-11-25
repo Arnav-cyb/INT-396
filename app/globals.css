@@ -37,35 +37,6 @@
   }
 }
 
-/* Fail-safe dark mode utility overrides: ensures zero white cards or black text in dark mode */
-@layer utilities {
-  .dark .bg-white:not([class*="dark:bg-"]) {
-    background-color: #0f172a !important;
-  }
-  .dark .bg-slate-50:not([class*="dark:bg-"]) {
-    background-color: #0b1120 !important;
-  }
-  .dark .bg-slate-100:not([class*="dark:bg-"]) {
-    background-color: #1e293b !important;
-  }
-  .dark .text-slate-900:not([class*="dark:text-"]) {
-    color: #f8fafc !important;
-  }
-  .dark .text-slate-800:not([class*="dark:text-"]) {
-    color: #f1f5f9 !important;
-  }
-  .dark .text-slate-700:not([class*="dark:text-"]) {
-    color: #cbd5e1 !important;
-  }
-  .dark .text-slate-600:not([class*="dark:text-"]) {
-    color: #94a3b8 !important;
-  }
-  .dark .border-slate-200:not([class*="dark:border-"]),
-  .dark .border-slate-100:not([class*="dark:border-"]) {
-    border-color: #1e293b !important;
-  }
-}
-
 /* Polished scrollbars */
 ::-webkit-scrollbar {
   width: 5px;
